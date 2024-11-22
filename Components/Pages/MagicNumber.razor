@@ -1,0 +1,57 @@
+@* Het bovenste gedeelte  is bedoeld voor het definiëren wat je wil gaan gebruiken op deze pagina. Maar ook
+om verschillende configuraties voor deze pagina in te stellen.
+De pagina toevoegen in je Menu kun je doen in NavMenu.razor  *@
+
+@page "/MagicNumber"
+@* De @page is een configuratie waarde. Hiermee geven we aan bij welke URL route hij deze pagina moet tekenen.
+In dit geval is het https://localhost/MagicNumber . In de achtergrond koppelt Blazor dan de URL routes 
+aan de juiste pagina. Hier hoef je verder niks voor te doen. *@
+
+@using BlazorEmpty.Data
+@inject MagicNumberService magicNumberService
+@* 
+De @using en @inject gebruik je om te definieren wat je gaat gebruiken. Omdat we hier de MagicNumber willen
+gebruiken. Injecteren we hem in de pagina onder de naam magicNumberService. 
+Omdat we meerdere klasse kunnen hebben met dezelfde naam. Geven we in de Using aan in welke namespace 
+de klasse staat die we willen gebruiken. 
+*@
+
+@*---------------------------------------------------------------------------------------------------*@
+
+@* In het middelste gedeelte schrijven we de razor code. Dit is een combinatie van HTML en c#*@
+<div class="border border-primary rounded p-3">
+    <h2>MagicNumber</h2>
+
+    <p class="text-center">The 6 magic numbers are: </p>
+        <div class="container-fluid">
+            <div class="row">
+                @* via @_magicNumber[0] geef ik aan dat ik de eerste waarde in de lijst die ik beneden 
+                heb gedefinieerd wil weergeven. *@
+                <div class="text-center col-md-6 col-md-3 col-lg-4 bg-danger">@_magicNumbers[0]</div>
+                <div class="text-center col-md-6 col-md-3 col-lg-4 bg-info">@_magicNumbers[1]</div>
+                <div class="text-center col-md-12 col-md-6 col-lg-4 bg-primary">@_magicNumbers[2]</div>
+            </div>
+            <div class="row">
+                <div class="text-center col-6 bg-danger">@_magicNumbers[3]</div>
+                <div class="text-center col-4 bg-info">@_magicNumbers[4]</div>
+                <div class="text-center col-2 bg-primary">@_magicNumbers[5]</div>
+            </div>
+        </div>
+</div>
+
+
+@*---------------------------------------------------------------------------------------------------*@
+
+@*In het Code blok schrijven we C# code. Hier kunnen we inhaken op verschillende bestaande methodes.
+Zoals de OnInitialized *@
+@code {
+
+    // hier wordt een lege nieuwe lijst gedefinieerd. Die ik hierboven aan kan roepen om weer te geven.
+    private List<int> _magicNumbers = new List<int>();
+
+    protected override void OnInitialized()
+    {
+        //hier worden de magicNumberService opgehaald en opgeslagen op de pagina
+        _magicNumbers =  magicNumberService.GetMagicNumbers();
+    }
+}
